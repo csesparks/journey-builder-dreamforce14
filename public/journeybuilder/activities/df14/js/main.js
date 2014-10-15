@@ -13,7 +13,7 @@ requirejs.config({
     }
 });
 
-requirejs( ['vendor/jquery.min', 'HelloWorld'], function( $, HelloWorld ) {
+requirejs( ['vendor/jquery.min', 'df14'], function( $, df14 ) {
 	//console.log( 'REQUIRE LOADED' );
 });
 
