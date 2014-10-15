@@ -23,17 +23,17 @@ define([
         }
 
         // If there is no message selected, disable the next button
-        if (!message) {
-            step = 1;
-            gotoStep(step);
-            connection.trigger('updateButton', { button: 'next', enabled: false });
+        //if (!message) {
+        //    step = 1;
+        //    gotoStep(step);
+        //    connection.trigger('updateButton', { button: 'next', enabled: false });
         // If there is a message, skip to the summary step
-        } else {
-            step = 3;
-            $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
-            $('#message').html(message);
-            gotoStep(step);
-        }
+        //} else {
+        //    step = 3;
+        //    $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
+        //    $('#message').html(message);
+        //    gotoStep(step);
+        //}
     });
 
     connection.on('requestedTokens', function(tokens) {
@@ -47,15 +47,15 @@ define([
     });
 
     connection.on('clickedNext', function() {
-        step++;
-        gotoStep(step);
-        connection.trigger('ready');
+       // step++;
+       // gotoStep(step);
+       connection.trigger('ready');
     });
 
     connection.on('clickedBack', function() {
-        step--;
-        gotoStep(step);
-        connection.trigger('ready');
+       // step--;
+       // gotoStep(step);
+       // connection.trigger('ready');
     });
 
     function onRender() {
@@ -68,9 +68,9 @@ define([
     }
 
     function gotoStep(step) {
-        $('.step').hide();
+        //$(‘.step').hide();
 
-	save();
+	//save();
     }
 
     function save() {
