@@ -32,6 +32,9 @@ define([
             $('#message').html(message);
             gotoStep(step);
         }
+
+
+        connection.trigger('ready');
     });
 
     connection.on('requestedTokens', function(tokens) {
