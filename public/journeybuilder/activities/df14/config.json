@@ -17,7 +17,7 @@
         "deviceEventPayload": "{{Event.CONTACT-EVENT-1a6c325c-a03a-da04-e430-02f96ef91c2d.deviceEventPayload}}"
     },
     "configurationArguments": {
-        "applicationExtensionKey": "df14jbc",
+        "applicationExtensionKey": "df14jbc"
     },
     "edit": {
         "uri": "",
