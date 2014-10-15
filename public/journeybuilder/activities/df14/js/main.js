@@ -7,7 +7,7 @@ requirejs.config({
         'vendor/jquery.min': {
             exports: '$'
         },
-		'HelloWorld': {
+		‘df14’: {
 			deps: ['vendor/jquery.min', 'vendor/postmonger']
 		}
     }
