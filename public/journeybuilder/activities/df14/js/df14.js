@@ -34,7 +34,6 @@ define([
         }
 
 
-        connection.trigger('ready');
     });
 
     connection.on('requestedTokens', function(tokens) {
@@ -72,6 +71,9 @@ define([
 
             $('#message').html(message);
         });
+
+        connection.trigger('ready');    
+
     }
 
     function gotoStep(step) {
