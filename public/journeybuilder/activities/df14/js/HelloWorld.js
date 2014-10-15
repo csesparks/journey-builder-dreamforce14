@@ -1,78 +1,89 @@
-define( function( require ) {
-	var Postmonger = require( 'postmonger' );
-	var $ = require( 'vendor/jquery.min' );
+define([
+    'js/postmonger'
+], function(
+    Postmonger
+) {
+    'use strict';
 
     var connection = new Postmonger.Session();
-	var tokens;
-	var endpoints;
+    var toJbPayload = {};
+    var step = 1;
 
-    $(window).ready(function() {
+    $(window).ready(onRender);
+
+    connection.on('initActivity', function(payload) {
+        var message;
+
+        if (payload) {
+            toJbPayload = payload;
+        }
+
+        if (toJbPayload['arguments'] && toJbPayload['arguments'].execute && toJbPayload['arguments'].execute.inArguments) {
+            message = toJbPayload['arguments'].execute.inArguments.message;
+        }
+
+        // If there is no message selected, disable the next button
+        if (!message) {
+            step = 1;
+            gotoStep(step);
+            connection.trigger('updateButton', { button: 'next', enabled: false });
+        // If there is a message, skip to the summary step
+        } else {
+            step = 3;
+            $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
+            $('#message').html(message);
+            gotoStep(step);
+        }
+    });
+
+    connection.on('requestedTokens', function(tokens) {
+        // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
+        // console.log(tokens);
+    });
+
+    connection.on('requestedTokens', function(endpoints) {
+        // Response: endpoints = { restHost: <url> } i.e. "rest.s1.qa1.exacttarget.com"
+        // console.log(endpoints);
+    });
+
+    connection.on('clickedNext', function() {
+        step++;
+        gotoStep(step);
         connection.trigger('ready');
-		connection.trigger('requestTokens');
-		connection.trigger('requestEndpoints');
-    })
-
-	// This listens for Journey Builder to send tokens
-	// Parameter is either the tokens data or an object with an
-	// "error" property containing the error message
-	connection.on('getTokens', function( data ) {
-		if( data.error ) {
-			console.error( data.error );
-		} else {
-			tokens = data;
-		}
-	});
-
-	/**
-		If you want to have a multi-step configuration view, you need to manage the DOM manually.
-		You can filter what changes to make by implementing the following type of logic when Postmonger from the server triggers an "updateStep" call.
-		// connection.on('updateStep', step ) {
-
-			if( step  >= 1 && step <= 3 ) {
-				$('.step').hide(); // All DOM elements which are steps should have this class (this hides them all)
-				$('#step' + step ).show(); // This selectively only displays the current step
-				// Allow the user to make any changes and when you're ready, use:
-				connection.trigger( 'updateStep', step ); 
-			}
-		}
-	**/
-
-	// This listens for Journey Builder to send endpoints
-	// Parameter is either the endpoints data or an object with an
-	// "error" property containing the error message
-	connection.on('getEndpoints', function( data ) {
-		if( data.error ) {
-			console.error( data.error );
-		} else {
-			endpoints = data;
-		}
-	});
-
-    connection.on('requestPayload', function() {
-	 var payload = {};
- 
-        payload.options = {
-           
-        };
-
-		//TODO: Shouldn't this come from the data?
-        payload.flowDisplayName = 'Hello World';
- 
-        connection.trigger('getPayload', payload);
     });
 
-	// Journey Builder broadcasts this event to us after this module
-	// sends the "ready" method. JB parses the serialized object which
-	// consists of the Event Data and passes it to the
-	// "config.js.save.uri" as a POST
-    connection.on('populateFields', function(payload) {
+    connection.on('clickedBack', function() {
+        step--;
+        gotoStep(step);
+        connection.trigger('ready');
     });
 
-	// Trigger this method when updating a step. This allows JB to
-	// update the wizard.
-    //connection.trigger('updateStep', nextStep);
+    function onRender() {
+        connection.trigger('ready');
 
-	// When everything has been configured for this activity, trigger
-	// the save:
-	// connection.trigger('save', 
+        connection.trigger('requestTokens');
+        connection.trigger('requestEndpoints');
+
+        // Disable the next button if a value isn't selected
+        $('#select1').change(function() {
+            var message = getMessage();
+            connection.trigger('updateButton', { button: 'next', enabled: Boolean(message) });
+
+            $('#message').html(message);
+        });
+    }
+
+    function gotoStep(step) {
+        $('.step').hide();
+
+	save();
+    }
+
+    function save() {
+       
+        toJbPayload['arguments'].execute.inArguments.deviceEventPayload = "{{Event.CONTACT-EVENT-1a6c325c-a03a-da04-e430-02f96ef91c2d.deviceEventPayload}}";
+ 
+        connection.trigger('updateActivity', toJbPayload);
+    }
+
 });
