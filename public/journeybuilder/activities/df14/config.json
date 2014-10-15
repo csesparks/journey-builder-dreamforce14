@@ -14,7 +14,15 @@
         }
     },
     "arguments": {
-        "deviceEventPayload": "{{Event.CONTACT-EVENT-1a6c325c-a03a-da04-e430-02f96ef91c2d.deviceEventPayload}}"
+        "execute": {
+            "outArguments": [],
+            "url": "https://posttestserver.com/post.php?dir=et_testjson_jexe",
+            "format": "json",
+            "useJwt": false,
+            "inArguments": {
+                "deviceEventPayload": "{{Event.CONTACT-EVENT-1a6c325c-a03a-da04-e430-02f96ef91c2d.deviceEventPayload}}"
+            }
+        }
     },
     "configurationArguments": {
         "applicationExtensionKey": "df14jbc"
@@ -25,4 +33,3 @@
         "width": 300
     }
 }
-
