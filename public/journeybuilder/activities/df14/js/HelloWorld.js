@@ -64,7 +64,7 @@ define([
         connection.trigger('requestTokens');
         connection.trigger('requestEndpoints');
 
-        connection.trigger('updateButton', { button: 'next', enabled: false });
+        //connection.trigger('updateButton', { button: 'next', enabled: false });
     }
 
     function gotoStep(step) {
@@ -75,9 +75,9 @@ define([
 
     function save() {
        
-        toJbPayload['arguments'].execute.inArguments.deviceEventPayload = "{{Event.CONTACT-EVENT-1a6c325c-a03a-da04-e430-02f96ef91c2d.deviceEventPayload}}";
+        //toJbPayload['arguments'].execute.inArguments.deviceEventPayload = "{{Event.CONTACT-EVENT-1a6c325c-a03a-da04-e430-02f96ef91c2d.deviceEventPayload}}";
  
-        connection.trigger('updateActivity', toJbPayload);
+        //connection.trigger('updateActivity', toJbPayload);
     }
 
 });
