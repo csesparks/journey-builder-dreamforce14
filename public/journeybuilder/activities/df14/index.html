@@ -1,19 +1,56 @@
 <!DOCTYPE html>
 
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Dreamforce14 Custom Activity</title>
-	<script data-main="js/main.js" src="js/require.js"></script>
+<html lang=&quot;en&quot;>
+    <head>
+        <meta charset=&quot;utf-8&quot;>
+        <title>Custom IXN Activity Test</title>
 
-	<!--Styles-->
-	<link rel="stylesheet" type="text/css" href="css/styles.css" />
-</head>
-<body>
-	<div id="container">
-		<h1>Hello World Custom Activity</h1>
-		<p>This Activity really only does one simple thing, and that's pass the data through to the endpoints defined in the config.js</p>
-		<p>Doing this keeps this as simple as possible and thus...a hello world for Custom Interactions.</p>
-	</div>
-</body>
+        <script type=&quot;text/javascript&quot; src=&quot;js/jquery.min.js&quot;></script>
+        <script type=&quot;text/javascript&quot; src=&quot;js/require.js&quot;></script>
+        <script type=&quot;text/javascript&quot;>
+            (function() {
+                var config = {
+                    baseUrl: ''
+                };
+
+                var dependencies = [
+                    'customActivity'
+                ];
+
+                require(config, dependencies);
+            })();
+        </script>
+
+        <!--Styles-->
+        <style type=&quot;text/css&quot;>
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            .step {
+                display: none;
+            }
+            #step1 {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div id=&quot;step1&quot; class=&quot;step&quot;>
+            Select your SMS message: 
+            <select id=&quot;select1&quot;>
+                <option value=&quot;&quot;>Select an option</option>
+                <option value=&quot;someMessage&quot;>Some SMS</option>
+                <option value=&quot;anotherMessage&quot;>Another SMS</option>
+                <option value=&quot;thirdMessage&quot;>Third SMS</option>
+                <option value=&quot;unknownMessage&quot;>Unknown SMS</option>
+            </select>
+        </div>
+        <div id=&quot;step2&quot; class=&quot;step&quot;>
+            Here iss a second page with some info on it. Blah blah blah.
+        </div>
+        <div id=&quot;step3&quot; class=&quot;step&quot;>
+            You chose the message: <div id=&quot;message&quot;></div>
+        </div>
+    </body>
 </html>
